@@ -1,0 +1,9 @@
+Hello
+This is a test circuit.
+
+.circuit
+R1 n1 n2 100 #This is a comment
+V1 n1 n2 10
+E1 n2 n3 n1 n2 0.001
+C1 n3 n1 0.00005
+.end

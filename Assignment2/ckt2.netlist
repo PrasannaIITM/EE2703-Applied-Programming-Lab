@@ -1,0 +1,5 @@
+.circuit
+C1 n2 GND 0.001
+R1 n1 n2 10
+V1 GND n1 10
+.end

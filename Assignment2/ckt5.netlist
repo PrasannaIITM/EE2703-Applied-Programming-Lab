@@ -1,0 +1,6 @@
+.circuit
+V1 GND n1 ac 10 0
+C1 n1 n2 0.000031831
+R1 n2 GND 5
+.end
+.ac V1 1000

@@ -1,0 +1,177 @@
+%
+% LaTeX report template 
+%
+
+% This is a comment: in LaTeX everything that in a line comes
+% after a "%" symbol is treated as comment
+
+\documentclass[11pt, a4paper]{article}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{listings}
+
+
+\title{Assignment No 9} % Title
+
+\author{Prasanna Bartakke EE19B106} % Author name
+
+\date{\today} % Date for the report
+\begin{document}		
+		
+\maketitle % Insert the title, author and date
+\section{Aim}
+%Create new section;it is autonumbered
+In this assignment, we continue our analysis of signals using Fourier Transforms. This time, we focus on finding transforms of non periodic functions. 
+\section{Examples}
+The worked examples in the assignment are given below:
+Spectrum of $sin(\sqrt{2}t)$ is given below\newline
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{fig0.png}
+\caption{Spectrum of sin($\sqrt{2}t$)}
+\label{fig:universe}
+\end{figure}
+\clearpage
+Original function for which we want the DFT:
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{fig1.png}
+\caption{sin($\sqrt{2}t$)}
+\label{fig:universe}
+\end{figure}
+As the DFT is computed over a finite time interval, we have actually plotted the DFT for this function
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{fig2.png}
+\caption{Spectrum of sin($\sqrt{2}t$)}
+\label{fig:universe}
+\end{figure}
+
+These discontinuities lead to  non harmonic components in the FFT which decay as \(\frac{1}{\omega}\). To confirm
+this, we plot the spectrum of the periodic ramp.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{fig3.png}
+\caption{Spectrum of sin($\sqrt{2}t$)}
+\label{fig:universe}
+\end{figure}
+\subsection{Windowing}
+The hamming window removes discontinuities by attenuating the high frequency components that cause the discontinuities.
+The hamming window function is given by
+\begin{equation}
+    x[n] = 0.54 + 0.46cos(\frac{2\pi n}{N-1})
+\end{equation}
+
+We multiply our signal with the hamming window and periodically extend it. The discontinuities nearly vanish.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{fig4.png}
+\caption{Spectrum of sin($\sqrt{2}t)*w(t)$}
+\label{fig:universe}
+\end{figure}
+\clearpage
+The spectrum that is obtained with a time period $2\pi$ is given below:
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{fig5.png}
+\caption{Spectrum of sin($\sqrt{2}t)*w(t)$}
+\label{fig:universe}
+\end{figure}
+
+The spectrum that is obtained with a time period $8\pi$ has a sharper peak and is given below:
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{fig6.png}
+\caption{Spectrum of sin($\sqrt{2}t)*w(t)$}
+\label{fig:universe}
+\end{figure}
+ 
+\section{Questions}
+\subsection{Question 2}
+In this question, we shall plot the FFT of $cos^3(0.86t)$
+The FFT without the hamming Window:
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{fig7.png}
+\label{fig:universe}
+\end{figure}
+\clearpage
+The FFT with the hamming Window:
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{fig8.png}
+\label{fig:universe}
+\end{figure}
+\clearpage
+We notice that a lot of the energy is stored in frequencies that aren't a part of the signal. After windowing, these frequencies are attenuated and hence the peaks are sharper in the windowed function. 
+
+\subsection{Question 3}
+We need to estimate $\omega$ and $\delta$ for a signal $\cos(\omega t + \delta)$ for 128 samples between $[-\pi,\pi)$. We estimate omega using a weighted average. We have to extract the digital spectrum of the signal and find the two peaks at $\pm\omega_0$, and estimate $\omega$ and $\delta$.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{fig9.png}
+\caption{Fourier transform of $cos(1.5t+0.5)$}
+\label{fig:universe}
+\end{figure}
+
+We estimate omega by performing a Mean average of $\omega$ over the magnitude of $|Y(j\omega)|$.
+For delta we consider a widow on each half of $\omega$ (split into positive and negative values) and extract their mean slope. 
+
+\subsection{Question 4}
+We repeat the exact same process as question 3 but with noise added to the original signal.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{fig10.png}
+\caption{Fourier transform of noise + $cos(1.5t+0.5)$}
+\label{fig:universe}
+\end{figure}
+
+\newpage
+\subsection{Question 5}
+In this question we analyze a chirp signal which is an FM signal where frequency is directly proportional to time.
+A chirp signal we shall consider is given by 
+\begin{equation}
+    f(t) = cos(16t(1.5 + \frac{t}{2\pi}))
+\end{equation}
+The FFT of the chirp is given by:
+We note that the frequency response is spread between 5-50 rad/s. A large section of this range apears due to Gibbs phenomenon. On windowing, only frequencies between 16 and 32 rad/s remain.
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{fig11.png}
+\caption{Chirp function fourier transform, windowed}
+\label{fig:universe}
+\end{figure}
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{fig12.png}
+\caption{Chirp function fourier transform}
+\label{fig:universe}
+\end{figure}
+\newpage
+\subsection{Question 6}
+For the same chirped signal, we break the 1024 vector into pieces that are 64 samples wide.
+Extract the DFT of each and store as a column in a 2D array. Then plot the array as a surface plot to show how the frequency of the signal varies with time.
+
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{fig13.png}
+\caption{Chopped Chirp function, |Fourier transform|}
+\label{fig:universe}
+\end{figure}
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.6]{fig14.png}
+\caption{Chopped Chirp function, Phase of Fourier transform}
+\label{fig:universe}
+\end{figure}
+
+\newpage
+
+
+\end{document}
+
+
+
+ 
